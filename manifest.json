@@ -1,0 +1,28 @@
+{
+  "manifest_version": 2,
+  "name": "GitHub Project Start Date",
+  "version": "1.0",
+  "description": "Shows the start date of a GitHub project.",
+  "permissions": [
+    "activeTab"
+  ],
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "Images/github.png"
+    }
+  },
+   "content_scripts": [
+    {
+      "matches": ["https://github.com/*/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "icons": {
+    "16": "Images/github.png"
+  },
+  "content_security_policy": "script-src 'self' https://api.github.com; object-src 'self'",
+  "web_accessible_resources": [
+    "images/*"
+  ]
+}

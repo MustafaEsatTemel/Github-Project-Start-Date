@@ -1,0 +1,19 @@
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  margin: 20px;
+}
+
+.container {
+  max-width: 300px;
+}
+
+h2 {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+#start-date {
+  margin-top: 10px;
+  font-style: italic;
+}
