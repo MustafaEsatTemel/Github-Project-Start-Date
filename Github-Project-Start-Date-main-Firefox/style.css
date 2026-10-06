@@ -1,0 +1,121 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+  background-color: #0d1117;
+  color: #e6edf3;
+  width: 290px;
+  padding: 14px;
+  user-select: none;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid #21262d;
+  padding-bottom: 10px;
+}
+
+.icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #161b22;
+  border: 1px solid #30363d;
+  color: #f0f6fc;
+}
+
+.header-text {
+  overflow: hidden;
+}
+
+.title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #f0f6fc;
+}
+
+.repo-name {
+  font-size: 11px;
+  color: #8b949e;
+  max-width: 210px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+.start-date {
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.date-badge {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  background: rgba(56, 139, 253, 0.1);
+  border: 1px solid rgba(56, 139, 253, 0.4);
+  color: #e6edf3;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.date-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #8b949e;
+  font-weight: 600;
+}
+
+.date-value {
+  font-size: 14px;
+  font-style: italic;
+  font-weight: bold;
+  background: linear-gradient(45deg, #ff6b6b, #f7e272, #60d394, #5085f0);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: popup-gradient-anim 4s ease infinite;
+}
+
+.loader {
+  color: #8b949e;
+  font-style: italic;
+  font-size: 12px;
+  padding: 6px 0;
+}
+
+.error-msg {
+  color: #f85149;
+  font-size: 11px;
+  line-height: 1.4;
+  padding: 4px 0;
+}
+
+@keyframes popup-gradient-anim {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
