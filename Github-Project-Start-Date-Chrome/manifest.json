@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "GitHub Project Start Date",
-  "version": "1.1",
+  "version": "1.2",
   "description": "Shows the start date of a GitHub project.",
   "permissions": [
     "activeTab",
@@ -22,7 +22,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://github.com/*/*"],
+      "matches": ["https://github.com/*"],
       "js": ["content.js"],
       "run_at": "document_idle"
     }

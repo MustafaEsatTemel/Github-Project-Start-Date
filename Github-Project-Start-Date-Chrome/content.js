@@ -70,43 +70,75 @@
     }
   }
 
-  function findInsertionTarget() {
-    // 1. Modern GitHub: Description or "No description" element in sidebar
-    const descEl = document.querySelector(
-      'div[class*="SidebarAbout-module__noDescription"], p[class*="SidebarAbout-module__description"]'
-    );
-    if (descEl) {
-      return { target: descEl, position: 'after' };
-    }
+  function findAllInsertionTargets() {
+    const results = [];
 
-    // 2. Modern GitHub: Insights block (License, Activity, Stars, etc.)
-    const insightsEl = document.querySelector(
-      'div[class*="SidebarAbout-module__insights"], div[class*="SidebarAbout-module__insightLinks"]'
+    // Collect all candidates: Desktop sidebars AND Mobile/Narrow headers
+    const candidateContainers = document.querySelectorAll(
+      'div[class*="CodeViewSidebar"], div[class*="HideWhenNarrow"], div[class*="Layout-sidebar"], div[class*="NarrowOnly"], .BorderGrid'
     );
-    if (insightsEl) {
-      return { target: insightsEl, position: 'before' };
-    }
 
-    // 3. Modern GitHub: Heading with "About"
-    const headings = document.querySelectorAll('h2');
-    for (const h of headings) {
-      if (h.textContent.trim().toLowerCase() === 'about') {
-        return { target: h, position: 'after' };
+    const allContainers = Array.from(candidateContainers);
+    if (allContainers.length === 0) {
+      const headings = document.querySelectorAll('h2');
+      for (const h of headings) {
+        if (h.textContent.trim().toLowerCase() === 'about') {
+          const parent = h.closest('div[class*="SidebarSection"]') || h.parentElement;
+          if (parent) allContainers.push(parent);
+        }
       }
     }
 
-    // 4. Legacy GitHub layouts
-    const legacyAbout = document.querySelector('.BorderGrid-cell .f4');
-    if (legacyAbout) {
-      return { target: legacyAbout, position: 'append' };
+    for (const containerEl of allContainers) {
+      // 1. Topic tags (insert after topics so it sits right under description + topics)
+      const topicEl = containerEl.querySelector(
+        'div[class*="TopicTagGroup"], div[class*="list-topics-container"], div[class*="topic-tag-action"]'
+      );
+      if (topicEl) {
+        results.push({ containerEl, anchorEl: topicEl, position: 'after' });
+        continue;
+      }
+
+      // 2. Description or "No description"
+      const descEl = containerEl.querySelector(
+        'div[class*="SidebarAbout-module__noDescription"], p[class*="SidebarAbout-module__description"]'
+      );
+      if (descEl) {
+        results.push({ containerEl, anchorEl: descEl, position: 'after' });
+        continue;
+      }
+
+      // 3. Insights block (License, Activity, Stars, etc.)
+      const insightsEl = containerEl.querySelector(
+        'div[class*="SidebarAbout-module__insights"], div[class*="SidebarAbout-module__insightLinks"]'
+      );
+      if (insightsEl) {
+        results.push({ containerEl, anchorEl: insightsEl, position: 'before' });
+        continue;
+      }
+
+      // 4. Heading with "About"
+      const headings = containerEl.querySelectorAll('h2');
+      let aboutHeading = null;
+      for (const h of headings) {
+        if (h.textContent.trim().toLowerCase() === 'about') {
+          aboutHeading = h;
+          break;
+        }
+      }
+      if (aboutHeading) {
+        results.push({ containerEl, anchorEl: aboutHeading, position: 'after' });
+        continue;
+      }
+
+      // 5. Legacy BorderGrid
+      const legacyCell = containerEl.querySelector('.BorderGrid-cell');
+      if (legacyCell) {
+        results.push({ containerEl, anchorEl: legacyCell, position: 'append' });
+      }
     }
 
-    const legacyCell = document.querySelector('.BorderGrid-row:first-child .BorderGrid-cell');
-    if (legacyCell) {
-      return { target: legacyCell, position: 'append' };
-    }
-
-    return null;
+    return results;
   }
 
   function injectStyles() {
@@ -136,6 +168,7 @@
         background-size: 300% 300%;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
+        color: #ff6b6b;
         animation: gh-gradient-anim 4s ease infinite;
       }
       @keyframes gh-gradient-anim {
@@ -157,53 +190,66 @@
       day: 'numeric'
     });
 
-    const targetInfo = findInsertionTarget();
-    if (!targetInfo) return false;
-
     injectStyles();
 
-    let container = document.getElementById('gh-project-start-date');
-    if (!container) {
-      container = document.createElement('div');
-      container.id = 'gh-project-start-date';
-      container.className = 'project-start-date-container';
+    const targets = findAllInsertionTargets();
+    if (targets.length === 0) return false;
+
+    let insertedCount = 0;
+
+    for (const targetInfo of targets) {
+      const { containerEl, anchorEl, position } = targetInfo;
+
+      // Check if this container already has our date element
+      let badge = containerEl.querySelector('.project-start-date-container');
+      if (!badge) {
+        badge = document.createElement('div');
+        badge.className = 'project-start-date-container';
+      }
+
+      badge.innerHTML = `
+        <svg class="octicon octicon-calendar project-start-date-icon" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" aria-hidden="true">
+          <path d="M4.75 0a.75.75 0 0 1 .75.75V2h5V.75a.75.75 0 0 1 1.5 0V2h1.25c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0 1 13.25 16H2.75A1.75 1.75 0 0 1 1 14.25V3.75C1 2.784 1.784 2 2.75 2H4V.75A.75.75 0 0 1 4.75 0ZM2.5 7.5v6.75c0 .138.112.25.25.25h10.5a.25.25 0 0 0 .25-.25V7.5Zm10.75-1.5H2.75a.25.25 0 0 0-.25.25V6h11V6.25a.25.25 0 0 0-.25-.25Z"></path>
+        </svg>
+        <span class="project-start-date-text">This project started on ${formatted}</span>
+      `;
+
+      if (position === 'after') {
+        if (anchorEl.nextSibling !== badge) {
+          anchorEl.after(badge);
+        }
+      } else if (position === 'before') {
+        if (anchorEl.previousSibling !== badge) {
+          anchorEl.before(badge);
+        }
+      } else if (position === 'append') {
+        if (badge.parentElement !== anchorEl) {
+          anchorEl.appendChild(badge);
+        }
+      }
+
+      insertedCount++;
     }
 
-    container.innerHTML = `
-      <svg class="octicon octicon-calendar project-start-date-icon" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" aria-hidden="true">
-        <path d="M4.75 0a.75.75 0 0 1 .75.75V2h5V.75a.75.75 0 0 1 1.5 0V2h1.25c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0 1 13.25 16H2.75A1.75 1.75 0 0 1 1 14.25V3.75C1 2.784 1.784 2 2.75 2H4V.75A.75.75 0 0 1 4.75 0ZM2.5 7.5v6.75c0 .138.112.25.25.25h10.5a.25.25 0 0 0 .25-.25V7.5Zm10.75-1.5H2.75a.25.25 0 0 0-.25.25V6h11V6.25a.25.25 0 0 0-.25-.25Z"></path>
-      </svg>
-      <span class="project-start-date-text">This project started on ${formatted}</span>
-    `;
-
-    const { target, position } = targetInfo;
-    if (position === 'after' && target.nextSibling !== container) {
-      target.after(container);
-    } else if (position === 'before' && target.previousSibling !== container) {
-      target.before(container);
-    } else if (position === 'append' && container.parentElement !== target) {
-      target.appendChild(container);
-    }
-
-    return true;
+    return insertedCount > 0;
   }
 
   async function processPage() {
     const repoInfo = getRepoDetails();
     if (!repoInfo) {
-      const existing = document.getElementById('gh-project-start-date');
-      if (existing) existing.remove();
+      document.querySelectorAll('.project-start-date-container').forEach(el => el.remove());
       return;
     }
 
     if (currentRepoKey !== repoInfo.key) {
       currentRepoKey = repoInfo.key;
       cachedDate = null;
-      const existing = document.getElementById('gh-project-start-date');
-      if (existing) existing.remove();
+      document.querySelectorAll('.project-start-date-container').forEach(el => el.remove());
     }
 
-    if (document.getElementById('gh-project-start-date')) {
+    // Check if the DESKTOP sidebar is already populated
+    const desktopContainer = document.querySelector('div[class*="CodeViewSidebar"], div[class*="HideWhenNarrow"]');
+    if (desktopContainer && desktopContainer.querySelector('.project-start-date-container')) {
       return;
     }
 
@@ -241,9 +287,10 @@
   // MutationObserver to catch asynchronous DOM updates in the sidebar
   let debounceTimeout = null;
   const observer = new MutationObserver(() => {
-    if (!document.getElementById('gh-project-start-date') && getRepoDetails()) {
+    const desktopContainer = document.querySelector('div[class*="CodeViewSidebar"], div[class*="HideWhenNarrow"]');
+    if (getRepoDetails() && (!desktopContainer || !desktopContainer.querySelector('.project-start-date-container'))) {
       clearTimeout(debounceTimeout);
-      debounceTimeout = setTimeout(processPage, 150);
+      debounceTimeout = setTimeout(processPage, 100);
     }
   });
 
