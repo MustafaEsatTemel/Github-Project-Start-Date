@@ -9,6 +9,16 @@
 </p>
 
 <p align="center">
+  <a href="https://chromewebstore.google.com/detail/bapokklneigobdjnkllqmbcekfhienj" target="_blank">
+    <img src="https://img.shields.io/badge/Chrome_Web_Store-Add_to_Chrome-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Available in Chrome Web Store">
+  </a>
+  &nbsp;&nbsp;
+  <a href="https://addons.mozilla.org/addon/github-project-start-date/" target="_blank">
+    <img src="https://img.shields.io/badge/Firefox_Add--ons-Add_to_Firefox-FF7139?style=for-the-badge&logo=firefoxbrowser&logoColor=white" alt="Available on Firefox Add-ons">
+  </a>
+</p>
+
+<p align="center">
   <a href="https://github.com/MustafaEsatTemel/Github-Project-Start-Date/releases"><img src="https://img.shields.io/github/v/release/MustafaEsatTemel/Github-Project-Start-Date?style=flat-square&color=2ea44f" alt="Release"></a>
   <img src="https://img.shields.io/badge/Manifest-V3-blue?style=flat-square" alt="Manifest V3">
   <img src="https://img.shields.io/badge/Browsers-Chrome%20%7C%20Brave%20%7C%20Edge%20%7C%20Firefox-orange?style=flat-square" alt="Browsers">
@@ -39,19 +49,30 @@ Açık kaynak bir projeyi incelerken *"Bu proje tam olarak ne zaman başladı?"*
 
 ## ✨ Features / Özellikler
 
-- 📌 **Direct In-Page Integration:** Appears right under the *About* section on any GitHub repository page.
+- 📌 **Dual In-Page Placement:** Displays start date both in the repository header bar (next to the Public/Private tag) and under the *About* sidebar.
 - 🛡️ **Private Repositories Supported:** Works on your private repositories without requiring authentication or personal access tokens.
 - ⚡ **Zero API Rate Limits:** Reads page metadata locally, completely bypassing GitHub's 60 req/hour API rate limit.
-- 🔄 **Turbo / SPA Navigation:** Automatically adapts to GitHub's Turbo Drive page transitions without needing page reloads.
+- 🔄 **Turbo / SPA Navigation:** Automatically adapts to GitHub's Turbo Drive page transitions with a resilient 5-second polling retry.
 - 🪟 **Toolbar Popup:** Click the extension icon to view repository start date in a modern dark-mode card.
 - 🚀 **Manifest V3:** Built with the latest, modern WebExtension Manifest V3 standard for speed, security, and low memory usage.
 - 🖤 **Official Classic GitHub Branding:** Clean, crisp official icons from 16x16 to 128x128.
 
 ---
 
+## 🚀 Official Stores / Resmî Mağazalar
+
+Eklentiyi mağazalardan doğrudan tek tıkla kurabilirsiniz:
+
+| Tarayıcı (Browser) | Mağaza Bağlantısı (Store Link) | Durum |
+| :--- | :--- | :--- |
+| **Chrome / Brave / Edge / Opera** | [**Chrome Web Store**](https://chromewebstore.google.com/detail/bapokklneigobdjnkllqmbcekfhienj) | ![Chrome](https://img.shields.io/badge/Chrome_Web_Store-Add_to_Chrome-4285F4?style=flat-square&logo=googlechrome&logoColor=white) |
+| **Mozilla Firefox** | [**Firefox Add-ons (AMO)**](https://addons.mozilla.org/addon/github-project-start-date/) | ![Firefox](https://img.shields.io/badge/Firefox_Add--ons-Add_to_Firefox-FF7139?style=flat-square&logo=firefoxbrowser&logoColor=white) |
+
+---
+
 ## 🛠️ Manuel Kurulum Rehberi (Adım Adım / Step-by-Step)
 
-Mağazayı beklemeden eklentiyi hemen tarayıcına yükleyip kullanabilirsin:
+Mağazayı beklemeden veya yerel geliştirmek için eklentiyi manuel olarak da yükleyebilirsiniz:
 
 ### 🌐 Chrome / Brave / Edge / Opera İçin Kurulum:
 
