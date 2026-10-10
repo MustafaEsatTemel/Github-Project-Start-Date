@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <a href="https://chromewebstore.google.com/detail/bapokklneigobdjnkllqmbcekfhienj" target="_blank">
+  <a href="https://chromewebstore.google.com/detail/github-project-start-date/bapokklneigobdjnklligmbcekfhienj" target="_blank">
     <img src="https://img.shields.io/badge/Chrome_Web_Store-Add_to_Chrome-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Available in Chrome Web Store">
   </a>
   &nbsp;&nbsp;
@@ -65,7 +65,7 @@ Eklentiyi mağazalardan doğrudan tek tıkla kurabilirsiniz:
 
 | Tarayıcı (Browser) | Mağaza Bağlantısı (Store Link) | Durum |
 | :--- | :--- | :--- |
-| **Chrome / Brave / Edge / Opera** | [**Chrome Web Store**](https://chromewebstore.google.com/detail/bapokklneigobdjnkllqmbcekfhienj) | ![Chrome](https://img.shields.io/badge/Chrome_Web_Store-Add_to_Chrome-4285F4?style=flat-square&logo=googlechrome&logoColor=white) |
+| **Chrome / Brave / Edge / Opera** | [**Chrome Web Store**](https://chromewebstore.google.com/detail/github-project-start-date/bapokklneigobdjnklligmbcekfhienj) | ![Chrome](https://img.shields.io/badge/Chrome_Web_Store-Add_to_Chrome-4285F4?style=flat-square&logo=googlechrome&logoColor=white) |
 | **Mozilla Firefox** | [**Firefox Add-ons (AMO)**](https://addons.mozilla.org/addon/github-project-start-date/) | ![Firefox](https://img.shields.io/badge/Firefox_Add--ons-Add_to_Firefox-FF7139?style=flat-square&logo=firefoxbrowser&logoColor=white) |
 
 ---
